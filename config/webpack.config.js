@@ -7,7 +7,8 @@ function resolve(dir) {
 module.exports = {
 	entry: ['./src/index.js'],
 	output: {
-		filename: 'bundle.js'
+		filename: '[name].bundle.js',
+		chunkFilename: '[name].bundle.js',
 	},
 	resolve: {
 		extensions: ['.js', '.json','.css'],
@@ -21,7 +22,10 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: 'babel-loader',
 				query: {
-					presets: ['es2015', 'react']
+					presets: [
+						'@babel/preset-react',
+						'@babel/preset-env'
+					]
 				}
 			},
 			{
@@ -30,10 +34,10 @@ module.exports = {
 				loader: 'babel-loader',
 				options: {
 					presets: [
-						'es2015',
-					  'react'
+						'@babel/preset-env',
+						'@babel/preset-react'
 					],
-					plugins: [ "transform-class-properties","transform-object-rest-spread" ]
+					plugins: [ "dynamic-import-webpack","transform-class-properties","@babel/plugin-proposal-object-rest-spread" ]
 				  }
 			},
 			{

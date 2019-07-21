@@ -1,4 +1,5 @@
 .dpval {
+    margin-top: 10px;
     margin-left: 10px;
     .text {
         margin-left: 5px;
@@ -6,10 +7,10 @@
     }
 }
 .datepicker {
-    padding: 15px;
+    padding: 10px;
     display: inline-block;
-    border: 1px solid;
     margin: 10px;
+    box-shadow: -1px 1px 10px #717171;
 
     .header {
         text-align: center;
@@ -18,7 +19,6 @@
 
     .dp-container {
         .visible-cal {
-            margin-top: 5px;
             .selected-cal {
                 text-transform: capitalize;
                 text-align: center;
@@ -26,19 +26,26 @@
                     margin-right: 5px;
                 }
             }
-
+            .month-cal {
+                display: inline-block;
+                margin-right: 15px;
+                margin-top: 10px;
+                &:last-of-type {
+                    margin-right: 0;
+                }
+            }
             position: relative;
 
             .next {
                 position: absolute;
                 right: 2%;
-                top: 0;
+                top: 10px;
             }
 
             .prev {
                 position: absolute;
                 left: 2%;
-                top: 0;
+                top: 10px;
             }
 
             table {
@@ -58,24 +65,31 @@
                             &.shown {
 
                                 &.hovered {
-                                    background-color: #ff9999;
+                                    background-color: #3691ca8c;
                                     color: white;
                                 }
 
                                 &.selected {
-                                    background-color: red;
+                                    background-color: #3691ca;
                                     color: white;
+                                }
+                                &.disabled {
+                                    color: #999;
+                                    pointer-events: none;
+                                    div{
+                                        cursor: not-allowed;
+                                    }
                                 }
 
                                 &.first {
-                                    border-left: 1px solid #666;
+                                    border-left: 1px solid #999;
                                 }
 
-                                border-bottom: 1px solid #666;
-                                border-right: 1px solid #666;
+                                border-bottom: 1px solid #999;
+                                border-right: 1px solid #999;
 
                                 &:first-of-type {
-                                    border-left: 1px solid #666;
+                                    border-left: 1px solid #999;
                                 }
                             }
 
@@ -93,15 +107,15 @@
                         &:first-of-type {
                             td {
                                 &.shown {
-                                    border-top: 1px solid #666;
+                                    border-top: 1px solid #999;
                                 }
 
                                 &.not-shown {
                                     pointer-events: none;
-                                    border-bottom: 1px solid #666;
+                                    border-bottom: 1px solid #999;
 
                                     &:last-of-type {
-                                        border-right: 1px solid #666;
+                                        border-right: 1px solid #999;
                                     }
                                 }
                             }

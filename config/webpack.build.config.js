@@ -6,17 +6,43 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const baseWebpackConfig = require('../config/webpack.config.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const outputpath = "./"
 const path = require('path');
+
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 var webpackConfig = merge(baseWebpackConfig, {
     output: {
-        publicPath: '/',
-        path: path.resolve(__dirname, '../dist'),
-        filename: 'assets/js/[name].js'
+        publicPath: outputpath,
+        filename: 'assets/js/[name].js',
+        chunkFilename: 'assets/js/[name].[contenthash:8].js',
+        path: path.resolve(__dirname, '../dist')
     },
     mode: 'production',
     optimization: {
-        minimize: true
+        minimize: true,
+        minimizer: [new UglifyJsPlugin(),new OptimizeCSSAssetsPlugin({})],
+        splitChunks: {
+            chunks: 'all',
+            minSize: 50000,
+            cacheGroups: {
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true
+                },
+                styles: {
+                    name: 'styles',
+                    test: /\.s?css$/,
+                    chunks: 'all',
+                    minChunks: 1,
+                    reuseExistingChunk: true,
+                    enforce: true,
+                  },
+            }
+        }
     },
     plugins: [
         new cleanWebpackPlugin(['dist'], {
@@ -28,6 +54,7 @@ var webpackConfig = merge(baseWebpackConfig, {
             filename: 'index.html',
             template: 'index_tem.html',
             inject: true,
+            hash:true,
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
@@ -35,16 +62,16 @@ var webpackConfig = merge(baseWebpackConfig, {
             },
             chunksSortMode: 'dependency'
         }),
+        new BundleAnalyzerPlugin(),
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: "assets/css/[name].css",
-            chunkFilename: "[id].css"
+            filename: "assets/css/[name].css"
         })
     ],
     module: {
         rules: [{
-            test: /\.css$/,
+            test: /\.(sa|sc|c)ss$/,
             use: [{
                     loader: MiniCssExtractPlugin.loader,
                     options: {
@@ -52,10 +79,9 @@ var webpackConfig = merge(baseWebpackConfig, {
                     },
 
                 },
-                {
-                    loader: 'css-loader'
-                }
-
+                'css-loader',
+                'sass-loader',
+       
             ]
         }]
     }
