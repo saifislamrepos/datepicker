@@ -39,6 +39,7 @@
     "babel-plugin-transform-dynamic-import": "^2.1.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "clean-webpack-plugin": "^0.1.19",
+    "compression-webpack-plugin": "^3.0.0",
     "css-loader": "^1.0.0",
     "es6-promise": "^4.2.5",
     "express": "^4.16.3",

@@ -1,5 +1,4 @@
 const merge = require('webpack-merge');
-const webpack = require('webpack');
 
 const cleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -10,6 +9,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const outputpath = "./"
 const path = require('path');
+const CompressionPlugin = require("compression-webpack-plugin")
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -67,6 +67,9 @@ var webpackConfig = merge(baseWebpackConfig, {
             // Options similar to the same options in webpackOptions.output
             // both options are optional
             filename: "assets/css/[name].css"
+        }),
+        new CompressionPlugin({
+            test: /\.js(\?.*)?$/i
         })
     ],
     module: {
